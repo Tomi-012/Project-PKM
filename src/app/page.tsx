@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useRef, useState, useEffect } from 'react'
-import { motion, useMotionValue, useAnimationFrame, wrap, animate, Variants } from 'framer-motion'
+import { motion, useMotionValue, useAnimationFrame, wrap, animate, Variants, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Brain, Bot, Zap, Search, Filter, Github, Twitter, Instagram, Facebook, ArrowRight, Mic, Film, Sparkles, PencilRuler, MoreHorizontal, ChevronLeft, ChevronRight, Share2, Code, Database, Lightbulb, Users, Accessibility, ChevronDown } from 'lucide-react'
+import { Brain, Bot, Zap, Search, Filter, Github, Twitter, Instagram, Facebook, ArrowRight, Mic, Film, Sparkles, PencilRuler, MoreHorizontal, ChevronLeft, ChevronRight, Share2, Code, Database, Lightbulb, Users, Accessibility, ChevronDown, ArrowUp } from 'lucide-react'
 import {
   Tooltip,
   TooltipContent,
@@ -74,6 +74,29 @@ export default function Home() {
 
   const categories = ['Chatbot AI', 'AI Video', 'AI Music', 'AI Design', 'AI Writing', 'AI Productivity', 'Platform AI'];
   const filters = ['Free', 'Premium', 'Open Source', 'Commercial'];
+  const teamMembers = [
+    {
+      role: 'Project Leader',
+      members: ['Ilham Bustomi', 'Reza Putra Nurhudaya', 'Alifiah Firnando'],
+      iconColor: 'text-blue-600',
+      bgColor: 'bg-blue-100',
+      pulseColor: 'bg-blue-200'
+    },
+    {
+      role: 'UI/UX Designer',
+      members: ['Adi Kurnia Sena', 'Farsha Runa', 'Lisa Ardeliana'],
+      iconColor: 'text-purple-600',
+      bgColor: 'bg-purple-100',
+      pulseColor: 'bg-purple-200'
+    },
+    {
+      role: 'Content Researcher',
+      members: ['Putra', 'Fachriza', 'Rara'],
+      iconColor: 'text-teal-600',
+      bgColor: 'bg-teal-100',
+      pulseColor: 'bg-teal-200'
+    }
+  ];
 
   // --- LOGIKA UNTUK SEAMLESS SCROLL ---
   const marqueeRef = useRef<HTMLDivElement>(null);
@@ -188,7 +211,22 @@ export default function Home() {
   const displayCategories = ['All', ...categories];
   const aiToDisplay = showAll ? filteredAI : filteredAI.slice(0, 6);
 
-  // --- LOGIKA UNTUK SMOOTH SCROLL ---
+  // --- LOGIKA UNTUK SMOOTH SCROLL & BACK TO TOP ---
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const checkScrollTop = () => {
+      if (!showBackToTop && window.pageYOffset > 400){
+        setShowBackToTop(true)
+      } else if (showBackToTop && window.pageYOffset <= 400){
+        setShowBackToTop(false)
+      }
+    };
+
+    window.addEventListener('scroll', checkScrollTop)
+    return () => window.removeEventListener('scroll', checkScrollTop)
+  }, [showBackToTop]);
+
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     const targetElement = document.getElementById(targetId);
@@ -196,6 +234,10 @@ export default function Home() {
       const offsetTop = targetElement.offsetTop - 64;
       window.scrollTo({ top: offsetTop, behavior: 'smooth' });
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // --- VARIAN ANIMASI UNTUK FRAMER MOTION ---
@@ -207,6 +249,37 @@ export default function Home() {
   const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } },
+  };
+
+  const teamCardVariant: Variants = {
+    initial: {
+      y: 20,
+      opacity: 0,
+    },
+    animate: {
+      y: 0,
+      opacity: 1,
+      transition: { type: 'spring', stiffness: 100 }
+    },
+    hover: {
+      y: -10,
+      scale: 1.05,
+      transition: { type: 'spring', stiffness: 300 }
+    }
+  };
+  
+  const avatarRotationVariants: Variants = {
+    initial: { 
+      rotate: 0,
+    },
+    hover: {
+      rotate: 360,
+      transition: {
+        duration: 2.5,
+        repeat: Infinity,
+        ease: 'linear',
+      },
+    },
   };
 
   return (
@@ -240,16 +313,21 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 lg:py-24">
+      <section id="home" className="relative overflow-hidden py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-0 z-0 opacity-50 bg-[radial-gradient(#d1d5db_1px,transparent_1px)] [background-size:20px_20px]"></div>
         <div className="absolute inset-0 z-1 bg-gradient-to-b from-slate-50 via-slate-50 to-transparent"></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }} 
+              animate={{ opacity: 1, x: 0 }} 
+              transition={{ duration: 0.8 }}
+              className="text-center lg:text-left"
+            >
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-blue-600">Eksplorasi Kekuatan AI untuk Semua Orang</h1>
               <p className="mt-6 text-lg sm:text-xl text-slate-600 leading-relaxed">Temukan berbagai tools AI terkini yang dapat membantu meningkatkan produktivitas dan kreativitas Anda dalam berbagai bidang.</p>
-              <div className="mt-10 flex flex-col sm:flex-row gap-4">
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <motion.a 
                     href="#category" 
                     onClick={(e) => handleScroll(e, 'category')}
@@ -306,8 +384,18 @@ export default function Home() {
       </section>
 
       {/* Apa itu Artificial Intelligence Section */}
-      <section id="ai-edu" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <section id="ai-edu" className="relative overflow-hidden py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
+        <motion.div 
+          className="absolute top-0 left-0 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-30"
+          animate={{ x: [-100, 100, -100], y: [-50, 50, -50] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div 
+          className="absolute bottom-0 right-0 w-96 h-96 bg-purple-50 rounded-full blur-3xl opacity-30"
+          animate={{ x: [100, -100, 100], y: [50, -50, 50] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
+        />
+        <div className="max-w-7xl mx-auto relative z-10">
             <motion.div 
               className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
@@ -325,7 +413,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                  <Card className="bg-slate-50 border-slate-200/80 h-full p-6 text-center shadow-sm hover:shadow-lg transition-shadow duration-300">
+                  <Card className="bg-white/50 backdrop-blur-md border-slate-200/80 h-full p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
                       <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center text-white">
                           <Share2 className="w-8 h-8"/>
                       </div>
@@ -339,7 +427,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
-                   <Card className="bg-slate-50 border-slate-200/80 h-full p-6 text-center shadow-sm hover:shadow-lg transition-shadow duration-300">
+                   <Card className="bg-white/50 backdrop-blur-md border-slate-200/80 h-full p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
                       <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center text-white">
                           <Code className="w-8 h-8"/>
                       </div>
@@ -353,7 +441,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                   <Card className="bg-slate-50 border-slate-200/80 h-full p-6 text-center shadow-sm hover:shadow-lg transition-shadow duration-300">
+                   <Card className="bg-white/50 backdrop-blur-md border-slate-200/80 h-full p-6 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
                       <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-teal-500 flex items-center justify-center text-white">
                           <Database className="w-8 h-8"/>
                       </div>
@@ -366,7 +454,7 @@ export default function Home() {
       </section>
 
       {/* AI yang paling sering digunakan Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 relative">
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 relative">
         <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-white to-transparent z-20 pointer-events-none"></div>
         <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white to-transparent z-20 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto">
@@ -437,8 +525,11 @@ export default function Home() {
       </section>
 
       {/* Pilih AI Sesuai Kebutuhanmu Section */}
-      <section id="category" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <section id="category" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
+        <div className="absolute -top-1/4 -right-20 w-1/3 h-1/3 bg-purple-50 rounded-full blur-3xl opacity-50 -z-1"></div>
+        <div className="absolute -bottom-1/4 -left-20 w-1/3 h-1/3 bg-blue-50 rounded-full blur-3xl opacity-50 -z-1"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <motion.div 
             className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -513,18 +604,21 @@ export default function Home() {
 
           <div className="border-t border-slate-200 pt-10">
              <motion.div
-                key={`${searchTerm}-${selectedCategory}-${selectedFilters.join('-')}-${showAll}`}
                 className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
               >
-                {aiToDisplay.length > 0 ? (
-                  aiToDisplay.map((ai) => (
+                <AnimatePresence>
+                  {aiToDisplay.map((ai) => (
                     <motion.div 
                       key={ai.name} 
                       variants={itemVariants} 
                       className="h-full"
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                      layout
                     >
                       <Card className="h-full flex flex-col justify-between shadow-md hover:shadow-xl transition-shadow duration-300 border-slate-200/80 bg-white group overflow-hidden">
                         <div className="p-6">
@@ -546,9 +640,10 @@ export default function Home() {
                         </div>
                       </Card>
                     </motion.div>
-                  ))
-                ) : (
-                  <motion.div 
+                  ))}
+                </AnimatePresence>
+                {aiToDisplay.length === 0 && (
+                   <motion.div 
                     className="col-span-1 sm:col-span-2 lg:col-span-3"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -598,7 +693,7 @@ export default function Home() {
       </section>
 
       {/* About Us Section */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="about" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -666,56 +761,54 @@ export default function Home() {
               </div>
             </motion.div>
           </div>
-        </div>
-      </section>
 
-      {/* Tentang Tim Kami Section */}
-      <section id="team" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Tentang Tim Kami</h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto">Kami adalah sekelompok mahasiswa yang bersemangat dalam inovasi dan teknologi, berdedikasi untuk membuat AI lebih mudah diakses oleh semua orang.</p>
-          </motion.div>
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.div variants={itemVariants}>
-              <Card className="text-center p-6 bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="mx-auto mb-4 w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Users className="w-12 h-12 text-blue-600" />
-                </div>
-                <CardTitle className="text-xl">Ilham Bustomi</CardTitle>
-                <CardDescription>Project Leader</CardDescription>
-              </Card>
+          {/* Tentang Tim Kami Section */}
+          <div id="team" className="mt-24">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Tentang Tim Kami</h2>
+              <p className="text-lg text-slate-600 max-w-3xl mx-auto">Kami adalah sekelompok mahasiswa yang bersemangat dalam inovasi dan teknologi, berdedikasi untuk membuat AI lebih mudah diakses oleh semua orang.</p>
             </motion.div>
-            <motion.div variants={itemVariants}>
-              <Card className="text-center p-6 bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="mx-auto mb-4 w-24 h-24 rounded-full bg-purple-100 flex items-center justify-center">
-                  <Users className="w-12 h-12 text-purple-600" />
-                </div>
-                <CardTitle className="text-xl">Anggota 2</CardTitle>
-                <CardDescription>UI/UX Designer</CardDescription>
-              </Card>
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              {teamMembers.map((team, index) => (
+                <motion.div key={index} variants={itemVariants} whileHover="hover" initial="initial" animate="visible">
+                  <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 h-full overflow-hidden bg-white">
+                     <div className="flex flex-col sm:flex-row items-center p-6 gap-6 text-center sm:text-left">
+                        <div className="relative flex-shrink-0">
+                           <motion.div 
+                            className="relative mx-auto w-24 h-24 rounded-full flex items-center justify-center"
+                            variants={avatarRotationVariants}
+                           >
+                              <div className={`absolute inset-0 rounded-full ${team.pulseColor} opacity-50`}/>
+                              <div className={`relative w-full h-full rounded-full ${team.bgColor} flex items-center justify-center`}>
+                                 <Users className={`w-12 h-12 ${team.iconColor}`} />
+                              </div>
+                           </motion.div>
+                        </div>
+                        <div className="flex-grow">
+                           <CardTitle className="text-xl">{team.role}</CardTitle>
+                           <div className="text-slate-500 mt-2 space-y-1">
+                              {team.members.map((member) => (
+                                <p key={member}>{member}</p>
+                              ))}
+                           </div>
+                        </div>
+                     </div>
+                  </Card>
+                </motion.div>
+              ))}
             </motion.div>
-            <motion.div variants={itemVariants}>
-              <Card className="text-center p-6 bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="mx-auto mb-4 w-24 h-24 rounded-full bg-teal-100 flex items-center justify-center">
-                  <Users className="w-12 h-12 text-teal-600" />
-                </div>
-                <CardTitle className="text-xl">Anggota 3</CardTitle>
-                <CardDescription>Content Researcher</CardDescription>
-              </Card>
-            </motion.div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -779,7 +872,23 @@ export default function Home() {
           </motion.div>
         </div>
       </footer>
+      
+      {/* Back to Top Button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-50"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <ArrowUp className="w-6 h-6" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
-
