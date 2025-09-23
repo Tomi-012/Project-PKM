@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -14,21 +15,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
+  title: "Project PKM - AI Powered Development",
+  description: "Platform untuk menemukan, mempelajari, dan menggunakan tools AI terbaik.",
+  icons: {
+    icon: `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>`,
+  },
+  keywords: ["Project PKM", "AI", "Artificial Intelligence", "Next.js", "React", "Mahasiswa", "Teknologi"],
+  authors: [{ name: "Tim Project PKM" }],
   openGraph: {
-    title: "Project PKM",
-    description: "AI-powered development with modern React stack",
-    url: "https://chat.z.ai",
-    siteName: "Z.ai",
+    title: "Project PKM - AI Powered Development",
+    description: "Platform untuk menemukan, mempelajari, dan menggunakan tools AI terbaik.",
+    url: "https://project-pkm-ai.vercel.app", // Ganti dengan URL jika sudah ada
+    siteName: "Project PKM",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "Project PKM - AI Powered Development",
+    description: "Platform untuk menemukan, mempelajari, dan menggunakan tools AI terbaik.",
   },
 };
 
