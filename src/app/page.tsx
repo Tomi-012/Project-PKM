@@ -737,7 +737,7 @@ export default function Home() {
   const teamMembers = [
     {
       role: 'Project Leader',
-      members: ['Ilham Bustomi', 'Reza Putra Nurhudaya', 'Alifiah Firnando'],
+      members: ['Ilham Bustomi', 'Reza Putra Nurhudaya'],
       iconColor: 'text-blue-600',
       bgColor: 'bg-blue-100',
       auraColors: { from: '#60A5FA', to: '#7DD3FC' },
@@ -752,9 +752,10 @@ export default function Home() {
     {
       role: 'Content Researcher',
       members: [
+        'Allifiah Firnando',
+        'Rara Anggraeni',
         'Putra Bagus Satrio',
         'Fachriza Khairul Fajri',
-        'Rara Anggraeni',
         'Fahri Patir Ramadhan',
       ],
       iconColor: 'text-teal-600',
