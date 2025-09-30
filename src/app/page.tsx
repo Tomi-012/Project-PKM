@@ -46,6 +46,7 @@ import {
   Accessibility,
   ChevronDown,
   ArrowUp,
+  ArrowDownAZ, // Ditambahkan untuk ikon sorting
 } from 'lucide-react';
 import {
   Tooltip,
@@ -71,7 +72,7 @@ export default function Home() {
       icon: '/icon/Midjourney.png',
       color: 'bg-gray-800',
       url: 'https://www.midjourney.com/',
-      shape: 'rounded-full',
+      shape: 'rounded-lg',
     },
     {
       name: 'DALL-E 3',
@@ -111,13 +112,13 @@ export default function Home() {
       icon: '/icon/Perplexity_White.png',
       color: 'bg-black',
       url: 'https://www.perplexity.ai/',
-      shape: 'rounded-full',
+      shape: 'rounded-lg',
     },
     {
       name: 'Canva Magic Studio',
       description: 'Fitur desain berbasis AI...',
       icon: '/icon/Canva_Magic_Studio.png',
-      color: 'bg-white-200',
+      color: 'bg-zinc-100',
       url: 'https://www.canva.com/magic-studio/',
       shape: 'rounded-lg',
     },
@@ -209,7 +210,7 @@ export default function Home() {
       url: 'https://www.perplexity.ai/',
       category: 'Chatbot AI',
       tags: ['Free', 'Premium'],
-      shape: 'rounded-full',
+      shape: 'rounded-lg',
     },
     {
       name: 'DeepSeek',
@@ -223,7 +224,7 @@ export default function Home() {
       shape: 'rounded-lg',
     },
     {
-      name: 'Chat Z.ai',
+      name: 'GLM-4.5',
       description: 'Platform chatbot AI untuk percakapan dan interaksi cerdas.',
       icon: '/icon/Chat Z.ai_Black.png',
       color: 'bg-zinc-100',
@@ -282,7 +283,7 @@ export default function Home() {
       url: 'https://pika.art/',
       category: 'AI Video',
       tags: ['Free', 'Premium'],
-      shape: 'rounded-full',
+      shape: 'rounded-lg',
     },
      {
       name: 'Steve AI',
@@ -335,7 +336,7 @@ export default function Home() {
       url: 'https://suno.com/',
       category: 'AI Music',
       tags: ['Free', 'Premium'],
-      shape: 'rounded-full',
+      shape: 'rounded-lg',
     },
     {
       name: 'Soundful',
@@ -379,7 +380,7 @@ export default function Home() {
       url: 'https://www.midjourney.com/',
       category: 'AI Design',
       tags: ['Premium'],
-      shape: 'rounded-full',
+      shape: 'rounded-lg',
     },
     {
       name: 'Leonardo.Ai',
@@ -396,7 +397,7 @@ export default function Home() {
       name: 'Canva Magic Studio',
       description: 'Fitur desain berbasis AI untuk mempercepat proses kreatif.',
       icon: '/icon/Canva_Magic_Studio.png',
-      color: 'bg-white-200',
+      color: 'bg-zinc-100',
       url: 'https://www.canva.com/ai-assistant/',
       category: 'AI Design',
       tags: ['Free', 'Premium'],
@@ -486,7 +487,7 @@ export default function Home() {
       url: 'https://github.com/features/copilot',
       category: 'AI Writing',
       tags: ['Premium', 'Commercial'],
-      shape: 'rounded-full',
+      shape: 'rounded-lg',
     },
      {
       name: 'Grammarly AI',
@@ -828,12 +829,13 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [selectedFilters, setSelectedFilters] = React.useState<string[]>([]);
+  const [sortOrder, setSortOrder] = React.useState('default'); // State baru untuk sorting
   const [filteredAI, setFilteredAI] = React.useState(allAI);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // --- LOGIKA UNTUK FILTER DATA ---
+  // --- LOGIKA UNTUK FILTER DAN SORT DATA ---
   React.useEffect(() => {
-    const results = allAI.filter((ai) => {
+    let results = allAI.filter((ai) => {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
       const matchCategory =
         selectedCategory === 'All' || ai.category === selectedCategory;
@@ -847,8 +849,14 @@ export default function Home() {
         selectedFilters.every((filter) => ai.tags.includes(filter));
       return matchCategory && matchSearch && matchFilters;
     });
+
+    // Logika sorting ditambahkan di sini
+    if (sortOrder === 'a-z') {
+      results.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
     setFilteredAI(results);
-  }, [searchTerm, selectedCategory, selectedFilters]);
+  }, [searchTerm, selectedCategory, selectedFilters, sortOrder]); // sortOrder ditambahkan ke dependencies
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory((prevCategory) =>
@@ -862,6 +870,10 @@ export default function Home() {
         ? prevFilters.filter((f) => f !== filter)
         : [...prevFilters, filter]
     );
+  };
+
+  const handleSortClick = () => {
+    setSortOrder(prev => prev === 'a-z' ? 'default' : 'a-z');
   };
 
   const displayCategories = ['All', ...categories];
@@ -1382,9 +1394,32 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <h3 className='text-lg font-semibold text-slate-900 mb-4 text-center md:text-left'>
-                Filter
+                Filter & Urutkan
               </h3>
               <div className='flex flex-wrap gap-3 justify-center md:justify-start'>
+                {/* Tombol Urutkan A-Z dipindahkan ke sini */}
+                <motion.div
+                    key="sort-az"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    <Badge
+                        variant={
+                            sortOrder === 'a-z'
+                                ? 'default'
+                                : 'secondary'
+                        }
+                        className={`px-4 py-2 cursor-pointer text-sm rounded-full transition-all duration-200 flex items-center gap-2 ${
+                            sortOrder === 'a-z'
+                                ? 'bg-slate-800 text-white border-slate-800'
+                                : 'border-slate-300 text-slate-700 hover:bg-slate-100'
+                        }`}
+                        onClick={handleSortClick}
+                    >
+                        <ArrowDownAZ className="w-4 h-4" />
+                        A-Z
+                    </Badge>
+                </motion.div>
                 {filters.map((filter) => (
                   <motion.div
                     key={filter}
