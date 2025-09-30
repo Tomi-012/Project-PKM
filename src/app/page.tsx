@@ -223,17 +223,6 @@ export default function Home() {
       shape: 'rounded-lg',
     },
     {
-      name: 'Poe by Quora',
-      description:
-        'Platform dari Quora yang menyediakan akses ke berbagai model AI chatbot.',
-      icon: '/icon/Poe-Chatbot-Logo.png',
-      color: 'bg-purple-100',
-      url: 'https://poe.com/',
-      category: 'Chatbot AI',
-      tags: ['Free', 'Premium'],
-      shape: 'rounded-lg',
-    },
-    {
       name: 'Chat Z.ai',
       description: 'Platform chatbot AI untuk percakapan dan interaksi cerdas.',
       icon: '/icon/Chat Z.ai_Black.png',
