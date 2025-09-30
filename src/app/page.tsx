@@ -1645,7 +1645,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Tentang Tim Kami Section */}
+        {/* Tim Kami Section */}
         <div
           id='team'
           className='relative bg-slate-50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 text-slate-800'
@@ -1660,7 +1660,7 @@ export default function Home() {
                 viewport={{ once: true, amount: 0.5 }}
               >
                 <h2 className='text-3xl md:text-4xl font-extrabold text-slate-900 mb-4'>
-                  Tentang Team Kami
+                  Team Kami
                 </h2>
                 <p className='text-lg text-slate-600 max-w-3xl mx-auto'>
                   Kami adalah team mahasiswa yang bersemangat dalam inovasi dan
