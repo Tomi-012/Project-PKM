@@ -47,6 +47,8 @@ import {
   ChevronDown,
   ArrowUp,
   ArrowDownAZ, // Ditambahkan untuk ikon sorting
+  ShieldCheck,
+  BookCheck,
 } from 'lucide-react';
 import {
   Tooltip,
@@ -118,7 +120,7 @@ export default function Home() {
       name: 'Canva Magic Studio',
       description: 'Fitur desain berbasis AI...',
       icon: '/icon/Canva_Magic_Studio.png',
-      color: 'bg-zinc-100',
+      color: 'bg-white-200',
       url: 'https://www.canva.com/magic-studio/',
       shape: 'rounded-lg',
     },
@@ -336,7 +338,7 @@ export default function Home() {
       url: 'https://suno.com/',
       category: 'AI Music',
       tags: ['Free', 'Premium'],
-      shape: 'rounded-lg',
+      shape: 'rounded-full',
     },
     {
       name: 'Soundful',
@@ -397,7 +399,7 @@ export default function Home() {
       name: 'Canva Magic Studio',
       description: 'Fitur desain berbasis AI untuk mempercepat proses kreatif.',
       icon: '/icon/Canva_Magic_Studio.png',
-      color: 'bg-zinc-100',
+      color: 'bg-white-200',
       url: 'https://www.canva.com/ai-assistant/',
       category: 'AI Design',
       tags: ['Free', 'Premium'],
@@ -753,6 +755,34 @@ export default function Home() {
     },
   ];
 
+  // Data untuk materi edukasi
+  const educationPoints = [
+    {
+      title: 'Berikan Perintah Jelas',
+      description:
+        'Semakin detail dan spesifik instruksi (prompt) Anda, semakin akurat dan relevan hasil yang diberikan oleh AI.',
+      icon: <Lightbulb className="w-8 h-8 text-blue-400" />,
+    },
+    {
+      title: 'Verifikasi Fakta',
+      description:
+        'AI bisa membuat kesalahan atau "berhalusinasi". Selalu periksa kembali informasi penting dari sumber terpercaya.',
+      icon: <BookCheck className="w-8 h-8 text-green-400" />,
+    },
+    {
+      title: 'Jaga Privasi Anda',
+      description:
+        'Hindari memasukkan data pribadi, rahasia perusahaan, atau informasi sensitif lainnya ke dalam platform AI.',
+      icon: <ShieldCheck className="w-8 h-8 text-red-400" />,
+    },
+    {
+      title: 'Gunakan Secara Etis',
+      description:
+        'Manfaatkan AI sebagai alat bantu inspirasi dan draf awal, bukan untuk menjiplak atau melakukan pelanggaran hak cipta.',
+      icon: <Users className="w-8 h-8 text-purple-400" />,
+    },
+  ];
+
   // --- LOGIKA UNTUK SEAMLESS SCROLL ---
   const marqueeRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -1005,14 +1035,6 @@ export default function Home() {
               >
                 Tentang Kami
               </motion.a>
-              <motion.a
-                href='#team'
-                onClick={(e) => handleScroll(e, 'team')}
-                className='text-slate-700 hover:text-blue-600 transition-colors'
-                variants={itemVariants}
-              >
-                Team Kami
-              </motion.a>
             </motion.div>
           </div>
         </div>
@@ -1077,7 +1099,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ type: 'spring', stiffness: 100, delay: 0.2 }}
-              className='relative flex items-center justify-center h-64 sm:h-80 lg:h-96 mt-12 lg:mt-0'
+              className='relative flex items-center justify-center h-80 sm:h-96 lg:h-[28rem] mt-12 lg:mt-0'
             >
               <div className='absolute bg-gradient-to-br from-blue-500 to-purple-600 rounded-full w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 flex items-center justify-center shadow-2xl shadow-blue-500/20'>
                 <Brain className='w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 text-white opacity-90' />
@@ -1108,12 +1130,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Apa itu Artificial Intelligence Section */}
+      {/* Edukasi AI Section */}
       <section
         id='ai-edu'
         className='relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#1A2A80] to-[#05091A] text-white overflow-hidden'
       >
-        {/* Notch effect */}
         <div className='absolute top-0 left-1/2 -translate-x-1/2 -translate-y-px w-32 h-16 bg-slate-50 [clip-path:ellipse(50%_100%_at_50%_0%)]'></div>
         <div className='max-w-7xl mx-auto relative z-10'>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
@@ -1123,73 +1144,39 @@ export default function Home() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-              <h2 className='text-3xl md:text-4xl font-extrabold text-white mb-6'>
-                Apa Itu Artificial Intelligence (AI)?
+              <h3 className='text-xl font-bold text-blue-300 mb-2'>Memahami Dasar-Dasar AI</h3>
+              <h2 className='text-3xl md:text-4xl font-extrabold text-white mb-4'>
+                Apa Itu Artificial Intelligence?
               </h2>
-              <p className='text-lg text-slate-300 leading-relaxed'>
+              <p className='text-lg text-slate-300 leading-relaxed mb-8'>
                 Artificial Intelligence (AI) adalah teknologi yang membuat
                 komputer dapat berpikir dan bekerja layaknya manusia. Dengan AI,
                 kita bisa menulis lebih cepat, membuat gambar, menghasilkan
                 musik, bahkan membantu bisnis dan pendidikan.
               </p>
+               <h3 className='text-xl font-bold text-blue-300 mb-2'>Cara Menggunakan AI Secara Efektif</h3>
+                 <p className='text-lg text-slate-300 leading-relaxed'>
+                Memanfaatkan AI secara maksimal membutuhkan pemahaman tentang cara berinteraksi dengannya. Berikut adalah beberapa tips kunci untuk penggunaan AI yang cerdas dan bertanggung jawab.
+              </p>
             </motion.div>
             <motion.div
-              className='grid grid-cols-2 gap-4'
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              className='grid grid-cols-2 gap-4 sm:gap-6'
+              initial='hidden'
+              whileInView='visible'
               viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+              variants={containerVariants}
             >
-              <motion.div
-                className='relative col-span-1 group'
-                whileHover={{ y: -8, scale: 1.05 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-              >
-                <div className='aspect-[3/4] relative'>
-                  <img
-                    src='https://placehold.co/400x533/1e293b/ffffff?text=Developer'
-                    alt='AI helping a developer code'
-                    className='w-full h-full object-cover rounded-2xl shadow-lg border-2 border-white/20'
-                  />
-                  <div className='absolute bottom-4 left-4 right-4 p-2 bg-slate-900/30 backdrop-blur-md rounded-xl border border-white/20 text-center'>
-                    <p className='font-medium text-white'>Future</p>
-                  </div>
-                </div>
-              </motion.div>
-              <div className='col-span-1 flex flex-col gap-4'>
-                <motion.div
-                  className='relative group'
-                  whileHover={{ y: -8, scale: 1.05 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <div className='aspect-video relative'>
-                    <img
-                      src='https://placehold.co/400x250/1e293b/ffffff?text=AI+Brain'
-                      alt='AI computer engine brain'
-                      className='w-full h-full object-cover rounded-2xl shadow-lg border-2 border-white/20'
-                    />
-                    <div className='absolute bottom-4 left-4 right-4 p-2 bg-slate-900/30 backdrop-blur-md rounded-xl border border-white/20 text-center'>
-                      <p className='font-medium text-white'>Computer engine</p>
-                    </div>
+              {educationPoints.map((point, index) => (
+                <motion.div key={index} variants={itemVariants}>
+                  <div className='h-full bg-slate-800/50 p-4 sm:p-6 rounded-2xl border border-slate-700 backdrop-blur-sm hover:bg-slate-800/80 transition-colors duration-300'>
+                     <div className='mb-4 flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-slate-900 border border-slate-700'>
+                        {point.icon}
+                     </div>
+                    <h4 className='font-bold text-md sm:text-lg text-white mb-2'>{point.title}</h4>
+                    <p className='text-slate-400 text-sm sm:text-base'>{point.description}</p>
                   </div>
                 </motion.div>
-                <motion.div
-                  className='relative group'
-                  whileHover={{ y: -8, scale: 1.05 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <div className='aspect-video relative'>
-                    <img
-                      src='https://placehold.co/400x250/1e293b/ffffff?text=Creativity'
-                      alt='AI enhancing creativity'
-                      className='w-full h-full object-cover rounded-2xl shadow-lg border-2 border-white/20'
-                    />
-                    <div className='absolute bottom-4 left-4 right-4 p-2 bg-slate-900/30 backdrop-blur-md rounded-xl border border-white/20 text-center'>
-                      <p className='font-medium text-white'>Think more</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
+              ))}
             </motion.div>
           </div>
         </div>
@@ -1645,7 +1632,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Tim Kami Section */}
+        {/* Tentang Tim Kami Section */}
         <div
           id='team'
           className='relative bg-slate-50 py-16 sm:py-20 px-4 sm:px-6 lg:px-8 text-slate-800'
@@ -1660,7 +1647,7 @@ export default function Home() {
                 viewport={{ once: true, amount: 0.5 }}
               >
                 <h2 className='text-3xl md:text-4xl font-extrabold text-slate-900 mb-4'>
-                  Team Kami
+                  Tentang Team Kami
                 </h2>
                 <p className='text-lg text-slate-600 max-w-3xl mx-auto'>
                   Kami adalah team mahasiswa yang bersemangat dalam inovasi dan
@@ -1669,7 +1656,7 @@ export default function Home() {
                 </p>
               </motion.div>
               <motion.div
-                className='grid grid-cols-1 md:grid-cols-3 gap-8'
+                className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'
                 variants={containerVariants}
                 initial='hidden'
                 whileInView='visible'
@@ -1824,18 +1811,6 @@ export default function Home() {
                     className='text-gray-400 hover:text-white transition-colors'
                   >
                     Tentang Kami
-                  </a>
-                </motion.li>
-                <motion.li
-                  whileHover={{ x: 5 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <a
-                    href='#team'
-                    onClick={(e) => handleScroll(e, 'team')}
-                    className='text-gray-400 hover:text-white transition-colors'
-                  >
-                    Team Kami
                   </a>
                 </motion.li>
               </ul>
